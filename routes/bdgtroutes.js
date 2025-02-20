@@ -74,7 +74,12 @@ router.get('/envelopes/user/:userId', async (req, res) => {
 
 router.post('/envelopes', async (req, res) => {
     try {
-
+        const { user_id, category_id, title, budget } = req.body;
+        const result = await pool.query(
+            'INSERT INTO envelopes (user_id, category_id, title, budget) VALUES ($1, $2, $3, $4) RETURNING *',
+            [user_id, category_id, title, budget]
+        )
+        res.status(201).json(result.rows[0]);
     } catch(err) {
         res.status(500).json({error: err.message});
     }
