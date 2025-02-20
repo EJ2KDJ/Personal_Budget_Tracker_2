@@ -88,7 +88,16 @@ router.post('/envelopes', async (req, res) => {
 // -- Transactions
 router.get('/transactions/user/:userId', async (req, res) => {
     try {
+        const { userId } = req.query;
+        const result = await pool.query(
+            'SELECT * FROM transactions WHERE user_id = $1',
+            [userId]
+        )
+        res.json(result.rows);
 
+        if (result.rows === 0 ){
+            return res.status(404).json({error: "No transactions found for this user"});
+        }
     } catch(err) {
         res.status(500).json({error: err.message});
     }
