@@ -33,43 +33,89 @@ router.post('/users', async (req, res) => {
 
 // -- Categories
 router.get('/categories/user/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const result = await pool.query(
+            'SELECT * FROM categories WHERE user_id = $1',
+            [userId]
+        );
+        res.json(result.rows);
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 router.post('/categories', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 // -- Envelopes 
 router.get('/envelopes/user/:userId', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 router.post('/envelopes', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 // -- Transactions
 router.get('/transactions/user/:userId', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 router.get('/transactions', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 // -- Transfers
 router.get('/transfers', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 // -- Updates
 router.put('/envelopes/:id', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 router.delete('/envelopes/:id', async (req, res) => {
+    try {
 
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 
