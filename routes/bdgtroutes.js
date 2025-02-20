@@ -4,7 +4,17 @@ const pool = require('./db');
 
 // -- Users
 router.get('/users/:id', async (req, res) => {
- 
+    try {
+        const{ id } = req.params;
+
+        const result = await pool.query(
+            'SELECT id, username, email, created_at FROM users WHERE id = $1', [id]
+        );
+
+        res.json(result.rows[0]);
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 });
 
 router.post('/users', async (req, res) => {
