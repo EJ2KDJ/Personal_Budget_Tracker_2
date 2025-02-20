@@ -61,7 +61,12 @@ router.post('/categories', async (req, res) => {
 // -- Envelopes 
 router.get('/envelopes/user/:userId', async (req, res) => {
     try {
-
+        const {userId } = req.query;
+        const result = await pool.query(
+            'SELECT * FROM envelopes WHERE user_id = $1',
+            [userId]
+        );
+        res.json(result.rows);
     } catch(err) {
         res.status(500).json({error: err.message});
     }
