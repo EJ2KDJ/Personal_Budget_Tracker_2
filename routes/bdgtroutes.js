@@ -18,7 +18,16 @@ router.get('/users/:id', async (req, res) => {
 });
 
 router.post('/users', async (req, res) => {
-
+    try {
+        const{ username, email, password_hash } = req.body;
+        const result = await pool.query(
+            'INSERT INTO users (username, email, password_hash, created_at) VALUES ($1, $2, $3, CURENT_TIMESTAMP) RETUrNING *',
+            [username, email, password_hash]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    };
 });
 
 
