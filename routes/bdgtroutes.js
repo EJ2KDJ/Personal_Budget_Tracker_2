@@ -114,9 +114,50 @@ router.get('/transactions', async (req, res) => {
 });
 
 // -- Transfers
+
+router.post('/transfer', async(req, res) => {
+    try {
+        const {user_id, from_envelope_id, to_envelope_id, amount} = req.body;
+
+        if (amount <= 0) {
+            return res.status(400).json({ error: "Amount must be greater than zero."});
+        }
+
+        await pool.query("BEGIN");
+
+        const fromEnvelope = await pool.query("SELECT budget FROM envelopes WHERE id = $1", [from_envelope_id]);
+        if (fromEnvelope.rows.length === 0) {
+            await pool.query("ROLLBACK");
+            return res.status(404).json({ error: "Source envelope not found"});
+        }
+        if (fromEnvelope.rows[0].budget < amount) {
+            await pool.query("ROLLBACK");
+            return res.status(400).json({ error: "Insufficient funds in the source envelope."});
+            
+        }
+
+        await pool.query("UPDATE envelopes SET budget = budget - $1 WHERE id = $2", [amount, from_envelope_id]);
+
+        await pool.query("UPDATE envelopes SET budget = budget - $1 WHERE id = $2", [amount, to_envelope_id]);
+
+        const transferResult = await pool.query(
+            'INSERT INTO transfer (user_id, from_envelope_id, to_envelope_id, amount, date) VALUES($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING *',
+            [user_id, from_envelope_id, to_envelope_id, amount]
+        );
+
+        await pool.query("COMMIT");
+
+        res.status(201).json(transferResult.rows[0]);
+    } catch(err) { 
+        await pool.query("ROLLBACK");
+        res.status(500).json({error: err.message});
+    }
+});
+
 router.get('/transfers', async (req, res) => {
     try {
-
+        const result = await pool.query('SELECT * FROM transfers ORDER BY date DESC');
+        res.json(result.rows);
     } catch(err) {
         res.status(500).json({error: err.message});
     }
