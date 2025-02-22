@@ -191,7 +191,15 @@ router.put('/envelopes/:id', async (req, res) => {
 
 router.delete('/envelopes/:id', async (req, res) => {
     try {
+        const { id } = req.params;
 
+        const result = await pool.query('DELETE FROM envelopes WHERE id = $1', [id]);
+
+        if(result.rows.length[0]) {
+            return res.status(404).json({ error: "Envelope not found."});
+        }
+        
+        res.status(200).json({ message: "Envelope deleted"});
     } catch(err) {
         res.status(500).json({error: err.message});
     }
