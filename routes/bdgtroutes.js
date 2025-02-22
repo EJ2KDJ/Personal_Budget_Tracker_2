@@ -32,6 +32,16 @@ router.post('/users', async (req, res) => {
     };
 });
 
+router.get('/users', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM users');
+
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message});
+    }
+});
+
 
 // -- Categories
 router.get('/categories/user/:userId', async (req, res) => {
