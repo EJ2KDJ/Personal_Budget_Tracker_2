@@ -166,7 +166,24 @@ router.get('/transfers', async (req, res) => {
 // -- Updates
 router.put('/envelopes/:id', async (req, res) => {
     try {
+        const { id } = req.params;
+        const { title, budget } = req.body;
 
+        if (!title && budget === undefined) {
+            return res.status(400).json({ error: "Must provid title or budget"});
+        }
+
+        const result = await pool.query(
+            'UPDATE envelopes SET title = COALESCE($1, title), budget = COALESCE($2, budget) WHERE id = $3 RETURNING *',
+            [title, budget, id]
+        );
+
+        if(result.rows.length === 0) {
+            return res.status(404).json({error: "Envelope not found"});
+        }
+
+        res.json(result.rows[0]);
+        
     } catch(err) {
         res.status(500).json({error: err.message});
     }
