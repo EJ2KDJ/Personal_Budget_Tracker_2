@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('./db'); // Import database connection
+const pool = require('./db.js'); // Import database connection
 const cors = require('cors');
 require('dotenv').config();
 
