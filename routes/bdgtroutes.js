@@ -1,3 +1,5 @@
+console.log('Routes file is loaded!');
+
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
