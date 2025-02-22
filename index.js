@@ -8,7 +8,7 @@ app.use(express.json()); // Allow JSON requests
 app.use(cors()); // Enable CORS
 
 
-const routes = require('./bdgtroutes');
+const routes = require('./routes/bdgtroutes');
 app.use('/', routes);
 
 // Test route to check DB connection
