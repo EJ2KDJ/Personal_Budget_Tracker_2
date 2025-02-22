@@ -7,6 +7,10 @@ const app = express();
 app.use(express.json()); // Allow JSON requests
 app.use(cors()); // Enable CORS
 
+
+const routes = require('./bdgtroutes');
+app.use('/', routes);
+
 // Test route to check DB connection
 app.get('/test-db', async (req, res) => {
   try {
