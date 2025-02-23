@@ -98,7 +98,7 @@ router.post('/envelopes', async (req, res) => {
 });
 
 // -- Transactions
-router.get('/transactions/user/:userId', async (req, res) => {
+router.get('/transactions/users/:userId', async (req, res) => {
     try {
         const { userId } = req.query;
         const result = await pool.query(
