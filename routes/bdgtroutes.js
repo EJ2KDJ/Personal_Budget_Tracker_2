@@ -127,7 +127,7 @@ router.get('/transactions', async (req, res) => {
 
 // -- Transfers
 
-router.post('/transfer', async(req, res) => {
+router.post('/transfers', async(req, res) => {
     try {
         const {user_id, from_envelope_id, to_envelope_id, amount} = req.body;
 
