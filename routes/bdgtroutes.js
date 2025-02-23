@@ -61,7 +61,7 @@ router.post('/categories', async (req, res) => {
     try {
         const {user_id, name, type} = req.body;
         const result = await pool.query(
-            'INSERT INTO categories (user_id, name, type, created_at) VALUES($1, $2. $3, CURRENT_TIMESTAMP) RETURNING *',
+            'INSERT INTO categories (user_id, name, type, created_at) VALUES($1, $2, $3, CURRENT_TIMESTAMP) RETURNING *',
             [user_id, name, type]
         )
         res.status(201).json(result.rows[0]);
