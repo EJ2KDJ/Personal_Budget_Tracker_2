@@ -100,7 +100,7 @@ router.post('/envelopes', async (req, res) => {
 // -- Transactions
 router.get('/transactions/users/:userId', async (req, res) => {
     try {
-        const { userId } = req.query;
+        const { userId } = req.params;
         const result = await pool.query(
             'SELECT * FROM transactions WHERE user_id = $1',
             [userId]
