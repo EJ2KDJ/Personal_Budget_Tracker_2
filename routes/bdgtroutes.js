@@ -217,5 +217,21 @@ router.delete('/envelopes/:id', async (req, res) => {
     }
 });
 
+router.delete('/transactions/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const result = await pool.query('DELETE FROM transactions WHERE id = $1', [id]);
+
+        if (result.rows.length[0]) {
+            return res.status(404).json({ error: "Transaction not found."});
+        }
+
+        res.status(200).json({ message: "Transaction deleted"});
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
+});
+
 
 module.exports = router;
