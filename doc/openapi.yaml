@@ -1,0 +1,224 @@
+openapi: 3.0.0
+info:
+  title: Budget Tracker API
+  description: API for managing users, categories, envelopes, transactions, and transfers.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: A list of users
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password_hash:
+                  type: string
+      responses:
+        '201':
+          description: User created successfully
+
+  /users/{id}:
+    get:
+      summary: Get a specific user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User details
+
+  /categories/users/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer    
+    get:
+      summary: Get categories for a user
+      responses:
+        '200':
+          description: List of categories
+    post:
+      summary: Create a category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                name:
+                  type: string
+                type:
+                  type: string
+      responses:
+        '201':
+          description: Category created
+
+  /envelopes/users/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Get envelopes for a user
+      responses:
+        '200':
+          description: List of envelopes
+    post:
+      summary: Create an envelope
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                category_id:
+                  type: integer
+                title:
+                  type: string
+                budget:
+                  type: number
+      responses:
+        '201':
+          description: Envelope created
+
+  /transactions/users/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Get transactions for a user
+
+      responses:
+        '200':
+          description: List of transactions
+    post:
+      summary: Create a transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                envelope_id:
+                  type: integer
+                amount:
+                  type: number
+                type:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Transaction created
+
+  /transactions/{id}:
+    delete:
+      summary: Delete a transaction
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transaction deleted
+        '404':
+          description: Transaction not found
+
+  /transfers:
+    get:
+      summary: Get all transfers
+      responses:
+        '200':
+          description: List of transfers
+    post:
+      summary: Create a transfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                from_envelope_id:
+                  type: integer
+                to_envelope_id:
+                  type: integer
+                amount:
+                  type: number
+      responses:
+        '201':
+          description: Transfer created
+
+  /envelopes/{id}:
+    put:
+      summary: Update an envelope
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                budget:
+                  type: number
+      responses:
+        '200':
+          description: Envelope updated
+    delete:
+      summary: Delete an envelope
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Envelope deleted
