@@ -46,10 +46,10 @@ router.get('/users', async (req, res) => {
 // -- Categories
 router.get('/categories/users/:id', async (req, res) => {
     try {
-        const { userId } = req.params;
+        const { id } = req.params;
         const result = await pool.query(
             'SELECT * FROM categories WHERE user_id = $1',
-            [userId]
+            [id]
         );
         res.json(result.rows);
     } catch(err) {
@@ -73,10 +73,10 @@ router.post('/categories', async (req, res) => {
 // -- Envelopes 
 router.get('/envelopes/users/:id', async (req, res) => {
     try {
-        const {userId } = req.params;
+        const {id } = req.params;
         const result = await pool.query(
             'SELECT * FROM envelopes WHERE user_id = $1',
-            [userId]
+            [id]
         );
         res.json(result.rows);
     } catch(err) {
@@ -100,10 +100,10 @@ router.post('/envelopes', async (req, res) => {
 // -- Transactions
 router.get('/transactions/users/:id', async (req, res) => {
     try {
-        const { userId } = req.params;
+        const { id } = req.params;
         const result = await pool.query(
             'SELECT * FROM transactions WHERE user_id = $1',
-            [userId]
+            [id]
         )
         res.json(result.rows);
 
