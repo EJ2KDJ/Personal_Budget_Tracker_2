@@ -44,7 +44,7 @@ router.get('/users', async (req, res) => {
 
 
 // -- Categories
-router.get('/categories/users/:userId', async (req, res) => {
+router.get('/categories/users/:id', async (req, res) => {
     try {
         const { userId } = req.params;
         const result = await pool.query(
@@ -71,7 +71,7 @@ router.post('/categories', async (req, res) => {
 });
 
 // -- Envelopes 
-router.get('/envelopes/users/:userId', async (req, res) => {
+router.get('/envelopes/users/:id', async (req, res) => {
     try {
         const {userId } = req.params;
         const result = await pool.query(
@@ -98,7 +98,7 @@ router.post('/envelopes', async (req, res) => {
 });
 
 // -- Transactions
-router.get('/transactions/users/:userId', async (req, res) => {
+router.get('/transactions/users/:id', async (req, res) => {
     try {
         const { userId } = req.params;
         const result = await pool.query(
