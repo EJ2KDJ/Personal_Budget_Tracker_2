@@ -1,2 +1,3 @@
-swagger-editor/
 .env
+.gitignore
+swagger-editor/
