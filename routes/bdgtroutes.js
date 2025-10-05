@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 
-// -- Users
+/**-- Users
 router.get('/users/:id', async (req, res) => {
     try {
         const{ id } = req.params;
@@ -17,8 +17,9 @@ router.get('/users/:id', async (req, res) => {
     } catch(err) {
         res.status(500).json({error: err.message});
     }
-});
+}); **/
 
+/**
 router.post('/users', async (req, res) => {
     try {
         const{ username, email, password_hash } = req.body;
@@ -31,7 +32,9 @@ router.post('/users', async (req, res) => {
         res.status(500).json({error: err.message});
     };
 });
+ */
 
+/**
 router.get('/users', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM users');
@@ -41,9 +44,10 @@ router.get('/users', async (req, res) => {
         res.status(500).json({ error: err.message});
     }
 });
+ */
 
 
-// -- Categories
+/** -- Categories
 router.get('/categories/users/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -69,8 +73,10 @@ router.post('/categories', async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
+**/
 
-// -- Envelopes 
+/** -- Envelopes 
+
 router.get('/envelopes/users/:id', async (req, res) => {
     try {
         const {id } = req.params;
@@ -96,6 +102,8 @@ router.post('/envelopes', async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
+
+**/
 
 // -- Transactions
 router.get('/transactions/users/:id', async (req, res) => {
@@ -176,6 +184,7 @@ router.get('/transfers', async (req, res) => {
 });
 
 // -- Updates
+/*
 router.put('/envelopes/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -200,6 +209,7 @@ router.put('/envelopes/:id', async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
+*/
 
 router.delete('/envelopes/:id', async (req, res) => {
     try {
