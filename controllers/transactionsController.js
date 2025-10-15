@@ -37,7 +37,12 @@ const getAllTransactionsByUserId = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        return res.status(200).json({ transactions: await Transaction.findAll({ where: { user_id: userId } }) });
+        const userResults = await Transaction.findAll({where: {user_id: userId} })
+
+        if (!userResults) {
+            return res.status(404).json({ error: 'No Transactions for this user'});
+        }
+        return res.status(200).json({userResults})
     } catch (err) {
         return res.status(500).json({ error: err.message});
         console.error(err);

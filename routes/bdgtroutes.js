@@ -1,8 +1,3 @@
-console.log('Routes file is loaded!');
-
-const express = require('express');
-const router = express.Router();
-const pool = require('../db');
 
 /**-- Users
 router.get('/users/:id', async (req, res) => {
@@ -105,7 +100,7 @@ router.post('/envelopes', async (req, res) => {
 
 **/
 
-// -- Transactions
+/** -- Transactions
 router.get('/transactions/users/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -132,8 +127,9 @@ router.get('/transactions', async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
+*/
 
-// -- Transfers
+/**  -- Transfers
 
 router.post('/transfers', async(req, res) => {
     try {
@@ -182,6 +178,7 @@ router.get('/transfers', async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
+*/
 
 // -- Updates
 /*
@@ -211,6 +208,7 @@ router.put('/envelopes/:id', async (req, res) => {
 });
 */
 
+/**
 router.delete('/envelopes/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -242,6 +240,4 @@ router.delete('/transactions/:id', async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
-
-
-module.exports = router;
+*/
