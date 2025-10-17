@@ -3,13 +3,17 @@ const pool = require('./db'); // Import database connection
 const cors = require('cors');
 require('dotenv').config();
 
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const transferRoutes = require('./routes/transferRoutes');
+const transactionRoutes = require('./routes/transactionRoutes');
+const envelopeRoutes = require('./routes/envelopeRoutes');
+
 const app = express();
 app.use(express.json()); // Allow JSON requests
 app.use(cors()); // Enable CORS
 
-
-const routes = require('./routes/bdgtroutes');
-app.use('/', routes);
 
 // Test route to check DB connection
 app.get('/test-db', async (req, res) => {
@@ -21,6 +25,13 @@ app.get('/test-db', async (req, res) => {
     res.status(500).send('Database connection failed');
   }
 });
+
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/categories', categoryRoutes);
+app.use('/transfers', transferRoutes);
+app.use('/transactions', transactionRoutes);
+app.use('/envelopes', envelopeRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to my API!');
