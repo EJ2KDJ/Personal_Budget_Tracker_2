@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const transactionController = require('../controllers/transactionsController');
-const {authentication, requireAdmin} = require('../middleware');
+const {authentication} = require('../middleware');
 
 router.use(authentication);
 

@@ -79,4 +79,9 @@ const createUser = async (req, res) => {
     }
 };
 
-// Update user details
+module.exports = {
+    getAllUsers,
+    getUserById,
+    createUser,
+    deleteUser
+};

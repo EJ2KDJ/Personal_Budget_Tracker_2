@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const envelopeController = require('../controllers/envelopesController');
-const authentication = require('../middleware');
+const {authentication} = require('../middleware');
 
 router.use(authentication);
 

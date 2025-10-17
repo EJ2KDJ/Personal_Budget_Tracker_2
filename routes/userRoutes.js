@@ -3,9 +3,9 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const {authentication, requireAdmin} = require('../middleware');
 
-router.post('/signup', userController.signup);
-
 router.use(authentication);
+
+router.post('/signup', userController.createUser);
 
 router.get('/', requireAdmin, userController.getAllUsers);
 router.get('/:id', requireAdmin, userController.getUserById);
