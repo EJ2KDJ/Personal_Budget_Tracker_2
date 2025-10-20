@@ -1,5 +1,5 @@
-const e = require("cors");
 
+// Signup form submission handling
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.querySelector('.register-form form');
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('/signup', {
+            const response = await fetch('/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -39,3 +39,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Login form submission handling
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.querySelector('.login-form form');
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = {
+            email: loginForm.email.value,
+            password: loginForm.password.value
+        };
+        try {
+            const response = await fetch('/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                alert('Login successful!');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            else {
+                alert(data.error || 'Login failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('An error occurred during login. Please try again later.');
+        }
+    });
+});
+
+// Toggle password visibility
+lucide.createIcons();
+
+function togglePass() {
+    const input = document.getElementById("input-pass");
+    const eye = document.getElementById("toggle-eye");
+    const isPassword = input.type === "password";
+
+    input.type = isPassword ? "text" : "password";
+    eye.setAttribute("data-lucide", isPassword ? "eye" : "eye-off");
+    lucide.createIcons();
+}
