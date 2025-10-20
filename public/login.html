@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;1,200&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <title>Login</title>
+</head>
+<body>
+    <h1>Personal Budget Tracker</h1><br>
+    <div class="login-form">
+        <h1>Login</h1>
+        <form action="/login" method="POST">
+
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="Username" required>
+
+            <label for="password">Password:</label>
+            <div class="pass">
+                <input id="input-pass" type="password" name="password" placeholder="Password" required>
+                <i data-lucide="eye-off" id="toggle-eye" class="toggle-pass" onclick="togglePass()"></i>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="register.html">Register</a></p>
+    </div>
+    <script src="login.js"></script>
+</body>
+<script>
+  lucide.createIcons();
+
+  function togglePass() {
+    const input = document.getElementById("input-pass");
+    const eye = document.getElementById("toggle-eye");
+    const isPassword = input.type === "password";
+
+    input.type = isPassword ? "text" : "password";
+    eye.setAttribute("data-lucide", isPassword ? "eye" : "eye-off");
+    lucide.createIcons();
+  }
+</script>
+
+
+</html>
