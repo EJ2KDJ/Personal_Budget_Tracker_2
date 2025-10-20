@@ -1,4 +1,4 @@
-const {User} = require('../sequelize/models/user');
+const {User} = require('../sequelize/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -65,7 +65,7 @@ const createUser = async (req, res) => {
             return res.status(400).json({ error: 'Email already in use' });
         }
 
-        if (!name || !email || !password) {
+        if (!username || !email || !password) {
             return res.status(400).json({ error: 'All fields are required' });
         }
 
