@@ -27,6 +27,13 @@ main {
     font-size: 18px;
     color: white;
     display: block;
+    white-space: nowrap;
+}
+
+.sidebar.closed a:not(.closebtn){
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
 
 .sidebar a:hover{

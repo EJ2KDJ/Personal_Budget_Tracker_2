@@ -27,6 +27,18 @@ const createCategory = async (req, res) => {
         }
 
         const { name, type } = req.body;
+
+        if (!name || !type) {
+            return res.status(400).json({ error: 'name and type are required' });
+        }
+
+        const newCategory = await Categories.create({
+            user_id: userId,
+            name,
+            type
+        });
+
+        return res.status(201).json({ category: newCategory });
     } catch (err) {
         res.status(500).json({ error: err.message});
         console.error(err);

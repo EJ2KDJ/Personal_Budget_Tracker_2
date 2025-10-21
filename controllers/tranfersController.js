@@ -8,7 +8,7 @@ const createTransfer = async (req, res) => {
         }
 
         const {from_envelope, to_envelope, amount, date} = req.body;
-        if (!from_envelope, !to_envelope, !amount) {
+        if (!from_envelope && !to_envelope && !amount) {
             return res.status(400).json({message: 'All fields are required'})
         }
 
@@ -20,14 +20,14 @@ const createTransfer = async (req, res) => {
         });
 
         const fromEnv = Envelope.findOne({ where: from_envelope});
-        const toEnv = Envelope.fidnOne({ where: to_envelope});
+        const toEnv = Envelope.findOne({ where: to_envelope});
 
         if (!fromEnv || !toEnv) {
-            return res.status(404).error({message: 'envelopes not found!'})
+            return res.status(404).json({message: 'envelopes not found!'})
         }
 
         if (fromEnv.budget < amount) {
-            return res.status(400).error({error: 'Insufficient balance'});
+            return res.status(400).json({error: 'Insufficient balance'});
         }
 
         fromEnv.budget -= amount;
@@ -35,14 +35,14 @@ const createTransfer = async (req, res) => {
 
         return res.status(201).json({message: "Budget transfer succesful"});
     } catch (err) {
-        return res.satus(500).json({error: err.message});
+        return res.status(500).json({error: err.message});
         console.log(err);
     }
 };
 
 const getAllTransfers = async (req, res) => {
     try {
-        const transfers = await Transfer.findall();
+        const transfers = await Transfer.findAll();
         
         return res.status(201).json({transfers});
     } catch (err) {
