@@ -13,15 +13,65 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <title>User Dashboard</title>
 </head>
-<div class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
-    <a class="active" href="#profile">Profile</a>
-    <a href="#envelopes">Envelopes</a>
-    <a href="#transfers">Transfers</a>
-    <a href="#transactions">Transactions</a>
-</div>
-<body>
 
+<body>
+    <div class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+        <a class="active" data-target="profile" href="#">Profile</a>
+        <a data-target="envelopes" href="#">Envelopes</a>
+        <a data-target="transfers" href="#">Transfers</a>
+        <a data-target="transactions" href="#">Transactions</a>
+    </div>
+    <section id="profile" class="tab-section active">
+        <h2>Profile</h2>
+
+        <!-- User Info Display -->
+        <div class="profile-card">
+            <div class="profile-row">
+                <label>Username:</label>
+                <span id="profile-username">Loading...</span>
+            </div>
+            <div class="profile-row">
+                <label>Email:</label>
+                <span id="profile-email">Loading...</span>
+            </div>
+            <div class="profile-row">
+                <label>Joined:</label>
+                <span id="profile-created">Loading...</span>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Update User Details -->
+        <h3>Update Account</h3>
+        <form id="updateProfileForm">
+            <div class="form-group">
+                <label for="updateUsername">New Username</label>
+                <input type="text" id="updateUsername" name="username" placeholder="Enter new username" />
+            </div>
+
+            <div class="form-group">
+                <label for="updateEmail">New Email</label>
+                <input type="email" id="updateEmail" name="email" placeholder="Enter new email" />
+            </div>
+
+            <div class="form-group">
+                <label for="updatePassword">New Password</label>
+                <input type="password" id="updatePassword" name="password" placeholder="Enter new password" />
+            </div>
+
+            <button type="submit" class="btn-save">Save Changes</button>
+        </form>
+
+        <hr>
+
+        <button id="deleteAccountBtn" class="btn-delete">Delete Account</button>
+    </section>
+
+    <section id="envelopes" class="tab-section"></section>
+    <section id="transfers" class="tab-section"></section>
+    <section id="transactions" class="tab-section"></section>
 </body>
 <script src="./js/dashboard.js"></script>
 </html>

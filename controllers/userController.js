@@ -14,6 +14,43 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+//Update user
+const updateUser = async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const authUserId = req.user.id; // from JWT middleware
+
+    if (userId !== authUserId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    const { username, email, password } = req.body;
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (username) user.username = username;
+    if (email) user.email = email;
+    if (password) user.password_hash = await bcrypt.hash(password, 10);
+
+    await user.save();
+
+    res.json({
+      message: 'User updated successfully',
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        createdAt: user.createdAt
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 const deleteUser = async (req, res) => {
     try {
         const user_id = req.user.id;
@@ -43,15 +80,16 @@ const deleteUser = async (req, res) => {
 // Get user by ID 
 const getUserById = async (req, res) => {
     try {
-        const{ id } = req.params;
+        const userId = req.params.id;
+        const user = await User.findByPk(userId, { attributes: ['id', 'username', 'email', 'createdAt'] });
 
-        const result = await pool.query(
-            'SELECT id, username, email, created_at FROM users WHERE id = $1', [id]
-        );
-
-        res.json(result.rows[0]);
-    } catch(err) {
-        res.status(500).json({error: err.message});
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json(user);
+    } catch (err) {
+        return res.status(500).json({ error: err.message});
+        console.error(err);
     }
 };
 
@@ -82,6 +120,7 @@ const createUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getUserById,
+    updateUser,
     createUser,
     deleteUser
 };

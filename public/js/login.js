@@ -1,80 +1,71 @@
 
 // Signup form submission handling
 document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.querySelector('.register-form form');
+  const signupForm = document.querySelector('.register-form form');
+  const loginForm = document.querySelector('.login-form form');
 
+  if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+      e.preventDefault();
+      const formData = {
+        username: signupForm.username.value,
+        email: signupForm.email.value,
+        password: signupForm.password.value
+      };
 
-        const formData = {
-            username: signupForm.username.value,
-            email: signupForm.email.value,
-            password: signupForm.password.value
-        };
-
-        try {
-            const response = await fetch('/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
-
-                alert('Signup successful! You can now log in.');
-
-                window.location.href = 'login.html';
-                return;
-            } else {
-                alert(data.error || 'Signup failed. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error during signup:', error);
-            alert('An error occurred during signup. Please try again later.');
+      try {
+        const response = await fetch('/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        const data = await response.json();
+        if (response.ok) {
+          localStorage.setItem('token', data.token);
+          alert('Signup successful! You can now log in.');
+          window.location.href = 'login.html';
+        } else {
+          alert(data.error || 'Signup failed.');
         }
+      } catch (error) {
+        console.error('Error during signup:', error);
+      }
     });
-});
+  }
 
-// Login form submission handling
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.querySelector('.login-form form');
-
+  if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = {
-            email: loginForm.email.value,
-            password: loginForm.password.value
-        };
-        try {
-            const response = await fetch('/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+      e.preventDefault();
+      const formData = {
+        email: loginForm.email.value,
+        password: loginForm.password.value
+      };
 
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
-                alert('Login successful!');
-                window.location.href = 'dashboard.html';
-                return;
-            }
-            else {
-                alert(data.error || 'Login failed. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-            alert('An error occurred during login. Please try again later.');
+      try {
+        const response = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        const data = await response.json();
+
+        console.log('Login response:', data);
+
+        if (response.ok && data.user) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('userId', data.user.id);
+          alert('Login successful!');
+          window.location.href = 'dashboard.html';
+        } else {
+          alert(data.error || 'Login failed.');
         }
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
     });
+  }
 });
+
 
 // Toggle password visibility
 lucide.createIcons();

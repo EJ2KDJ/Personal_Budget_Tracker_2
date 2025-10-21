@@ -7,6 +7,15 @@ main {
     background-color: antiquewhite;
 }
 
+body {
+    margin-left: 300px;
+    transition: margin-left 0.5s;
+}
+
+.sidebar.closed ~ body {
+    margin-left: 50px;
+}
+
 .sidebar{
     z-index: 1;
     height: 100%;
@@ -55,4 +64,78 @@ main {
   font-size: 36px;
   margin-left: 50px;
   transition: 0.5s;
+}
+
+.tab-section {
+    display: none;
+    padding: 2rem;
+}
+
+.tab-section.active {
+    display: block;
+}
+
+/* Profile Section */
+.profile-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.profile-row label {
+  font-weight: 600;
+  color: #273c75;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.btn-save {
+  background-color: #44bd32;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background-color: #4cd137;
+}
+
+.btn-delete {
+  background-color: #e84118;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #c23616;
 }
