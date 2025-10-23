@@ -1,60 +1,60 @@
 * {
-    font-family: 'Source Code Pro', sans-serif;
+  font-family: 'Source Code Pro', sans-serif;
 }
 
 body,
 main {
-    background-color: antiquewhite;
+  background-color: antiquewhite;
 }
 
 body {
-    margin-left: 300px;
-    transition: margin-left 0.5s;
+  margin-left: 300px;
+  transition: margin-left 0.5s;
 }
 
-.sidebar.closed ~ body {
-    margin-left: 50px;
+.sidebar.closed~body {
+  margin-left: 50px;
 }
 
-.sidebar{
-    z-index: 1;
-    height: 100%;
-    width: 300px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    padding-top: 50px;
-    overflow-x: hidden;
-    transition: 0.5s;
+.sidebar {
+  z-index: 1;
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  padding-top: 50px;
+  overflow-x: hidden;
+  transition: 0.5s;
 }
 
-.sidebar a{
-    padding: 10px 15px;
-    gap: 5px;
-    text-decoration: none;
-    font-size: 18px;
-    color: white;
-    display: block;
-    white-space: nowrap;
+.sidebar a {
+  padding: 10px 15px;
+  gap: 5px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  white-space: nowrap;
 }
 
-.sidebar.closed a:not(.closebtn){
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
+.sidebar.closed a:not(.closebtn) {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
 }
 
-.sidebar a:hover{
-    background-color: linen;
-    color: black;
-    transition: 0.5s ease;
+.sidebar a:hover {
+  background-color: linen;
+  color: black;
+  transition: 0.5s ease;
 }
 
-.sidebar a.active{
-    background-color: antiquewhite;
-    color: black;
-    transition: 0.5s ease;
+.sidebar a.active {
+  background-color: antiquewhite;
+  color: black;
+  transition: 0.5s ease;
 }
 
 .sidenav .closebtn {
@@ -67,22 +67,23 @@ body {
 }
 
 .tab-section {
-    display: none;
-    padding: 2rem;
+  display: none;
+  padding: 2rem;
 }
 
 .tab-section.active {
-    display: block;
+  display: block;
 }
 
 /* Profile Section */
+
 .profile-card {
   background: white;
   padding: 1.5rem;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .profile-row {
@@ -94,10 +95,21 @@ body {
 .profile-row label {
   font-weight: 600;
   color: #273c75;
+  font-size: 16px;
+}
+
+.profile-row span {
+  color: #353b48;
+  font-size: 16px;
+}
+
+hr {
+  border: 1px solid #202020;
 }
 
 .form-group {
   margin-bottom: 1rem;
+  font-size: 1.2rem;
 }
 
 .form-group label {
@@ -106,12 +118,19 @@ body {
   font-weight: 600;
 }
 
-input {
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 2px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+#updateProfileForm input:not(#updatePassword) {
+  width: 50%;
+  padding: 0.6rem 0rem 0.6rem;
+  border: none;
+  border-bottom: 1px solid #202020;
+  background-color: antiquewhite;
+  font-size: 1.2rem;
+}
+
+#updateProfileForm input:focus {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #273c75;
 }
 
 .btn-save {
@@ -121,6 +140,7 @@ input {
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .btn-save:hover {
@@ -134,8 +154,45 @@ input {
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .btn-delete:hover {
   background-color: #c23616;
 }
+
+#password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+#password-wrapper #updatePassword {
+  width: 100%;
+  padding: 0.6rem 0rem 0.6rem;
+  border: none;
+  border-bottom: 1px solid #202020;
+  background-color: antiquewhite;
+  font-size: 1.2rem;
+}
+
+#password-wrapper .toggle-pass {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.toggle-pass:hover {
+  opacity: 1;
+}
+
+/* Envelopes Section */
+

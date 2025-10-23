@@ -23,7 +23,7 @@
         <a data-target="transactions" href="#">Transactions</a>
     </div>
     <section id="profile" class="tab-section active">
-        <h2>Profile</h2>
+        <h1>Profile</h1>
 
         <!-- User Info Display -->
         <div class="profile-card">
@@ -44,7 +44,7 @@
         <hr>
 
         <!-- Update User Details -->
-        <h3>Update Account</h3>
+        <h2>Update Account</h2>
         <form id="updateProfileForm">
             <div class="form-group">
                 <label for="updateUsername">New Username</label>
@@ -58,7 +58,10 @@
 
             <div class="form-group">
                 <label for="updatePassword">New Password</label>
-                <input type="password" id="updatePassword" name="password" placeholder="Enter new password" />
+                <div id="password-wrapper">
+                    <input type="password" id="updatePassword" name="password" placeholder="Enter new password" />
+                    <i data-lucide="eye-off" id="toggle-eye" class="toggle-pass" onclick="togglePass()"></i>
+                </div>
             </div>
 
             <button type="submit" class="btn-save">Save Changes</button>
@@ -69,9 +72,43 @@
         <button id="deleteAccountBtn" class="btn-delete">Delete Account</button>
     </section>
 
-    <section id="envelopes" class="tab-section"></section>
+    <section id="envelopes" class="tab-section">
+        <h2>Envelopes</h2>
+
+        <form id="addEnvelopeForm" class="envelope-form">
+            <div class="form-group">
+                <label for="envelopeName">Envelope Name</label>
+                <input type="text" id="envelopeName" name="name" placeholder="e.g. Groceries" required>
+            </div>
+
+            <div class="form-group">
+                <label for="envelopeBudget">Budget Amount</label>
+                <input type="number" id="envelopeBudget" name="budget" placeholder="e.g. 5000" required>
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+
+                <input type="text" id="newCategoryName" placeholder="Enter a new category name">
+
+                <select id="existingCategorySelect">
+                    <option value="">Select an existing category</option>
+                </select>
+            </div>
+
+
+            <button type="submit" class="btn-save">Add Envelope</button>
+
+            <hr>
+
+            <div id="envelopeList" class="envelope-list">
+                <p>Loading envelopes...</p>
+            </div>
+    </section>
+
     <section id="transfers" class="tab-section"></section>
     <section id="transactions" class="tab-section"></section>
 </body>
 <script src="./js/dashboard.js"></script>
+
 </html>

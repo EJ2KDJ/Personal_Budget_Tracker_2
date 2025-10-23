@@ -1,5 +1,23 @@
+async function loadUserProfile() {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    const response = await fetch(`/users/${userId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Failed to load user info');
+    const user = await response.json();
+
+    document.getElementById("profile-username").textContent = user.username;
+    document.getElementById("profile-email").textContent = user.email;
+    document.getElementById("profile-created").textContent =
+        new Date(user.createdAt || user.created_at).toLocaleDateString();
+}
+
+
 // Profile data fetch and display
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", loadUserProfile, async () => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
 
@@ -34,6 +52,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (err) {
         console.error(err);
         alert('Error fetching user data.');
+    }
+});
+
+//Update profile form submission
+document.getElementById('updateProfileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    const newUsername = document.getElementById('updateUsername').value;
+    const newEmail = document.getElementById('updateEmail').value;
+    const newPassword = document.getElementById('updatePassword').value;
+
+    const updateData = {};
+    if (newUsername) updateData.username = newUsername;
+    if (newEmail) updateData.email = newEmail;
+    if (newPassword) updateData.password = newPassword;
+
+    if (Object.keys(updateData).length === 0) {
+        alert('Please fill out at least one field to update.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/users/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateData)
+        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+
+        await loadUserProfile();
+        document.getElementById('updateProfileForm').reset();
+    } catch (err) {
+        console.error(err);
+        alert('Error updating profile.');
     }
 });
 
@@ -72,4 +133,18 @@ function toggleNav() {
         body.style.marginLeft = '300px';
         btn.innerHTML = '&times;';
     }
+}
+
+
+// Toggle visibility for update password field
+lucide.createIcons();
+
+function togglePass() {
+    const input = document.getElementById("updatePassword");
+    const eye = document.getElementById("toggle-eye");
+    const isPassword = input.type === "password";
+
+    input.type = isPassword ? "text" : "password";
+    eye.setAttribute("data-lucide", isPassword ? "eye" : "eye-off");
+    lucide.createIcons();
 }
