@@ -73,37 +73,41 @@
     </section>
 
     <section id="envelopes" class="tab-section">
-        <h2>Envelopes</h2>
+        <h1>Envelopes</h1>
 
-        <form id="addEnvelopeForm" class="envelope-form">
-            <div class="form-group">
-                <label for="envelopeName">Envelope Name</label>
-                <input type="text" id="envelopeName" name="name" placeholder="e.g. Groceries" required>
+        <div class="envelope-container">
+            <form id="addEnvelopeForm" class="envelope-form">
+                <div class="form-group">
+                    <label for="envelopeName">Envelope Name</label>
+                    <input type="text" id="envelopeName" name="name" placeholder="e.g. Groceries" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="envelopeBudget">Budget Amount</label>
+                    <input type="number" id="envelopeBudget" name="budget" placeholder="e.g. 5000" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="newCategoryName" placeholder="New category">
+                    <select id="existingCategorySelect">
+                        <option value="">Select an existing category</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-save">Add Envelope</button>
+            </form>
+
+            <div class="envelope-list">
+                <div class="search-envelopes">
+
+                </div>
+                <h3>Your Envelopes</h3>
+                <div id="envelopeList">
+                    <p>Loading envelopes...</p>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="envelopeBudget">Budget Amount</label>
-                <input type="number" id="envelopeBudget" name="budget" placeholder="e.g. 5000" required>
-            </div>
-
-            <div class="form-group">
-                <label>Category</label>
-
-                <input type="text" id="newCategoryName" placeholder="Enter a new category name">
-
-                <select id="existingCategorySelect">
-                    <option value="">Select an existing category</option>
-                </select>
-            </div>
-
-
-            <button type="submit" class="btn-save">Add Envelope</button>
-
-            <hr>
-
-            <div id="envelopeList" class="envelope-list">
-                <p>Loading envelopes...</p>
-            </div>
+        </div>
     </section>
 
     <section id="transfers" class="tab-section"></section>

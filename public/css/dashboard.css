@@ -134,6 +134,8 @@ hr {
 }
 
 .btn-save {
+  margin-top: 4rem;
+  margin-bottom: 1rem;
   background-color: #44bd32;
   color: white;
   padding: 0.7rem 1.2rem;
@@ -148,6 +150,7 @@ hr {
 }
 
 .btn-delete {
+  margin-top: 1rem;
   background-color: #e84118;
   color: white;
   padding: 0.7rem 1.2rem;
@@ -194,5 +197,76 @@ hr {
   opacity: 1;
 }
 
-/* Envelopes Section */
+/* Envelopes Section ----------------------------------------*/
 
+.envelope-container {
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.envelope-form {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.envelope-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.envelope-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.envelope-form input[type="text"],
+.envelope-form input[type="number"],
+.envelope-form select {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 4px 6px;
+  width: auto;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.envelope-form input:focus,
+.envelope-form select:focus {
+  outline: none;
+  border-color: #273c75;
+}
+
+.envelope-form hr {
+  margin: 1.5rem 0;
+}
+
+.envelope-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
+}
+
+.envelope-list h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #273c75;
+}
+
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 900px) {
+  .envelope-container {
+    grid-template-columns: 1fr;
+  }
+}
