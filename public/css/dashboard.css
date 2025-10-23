@@ -104,7 +104,9 @@ body {
 }
 
 hr {
-  border: 1px solid #202020;
+  border: none;
+  border-top: 1px solid black;
+  margin: 2rem 0;
 }
 
 .form-group {
@@ -134,7 +136,7 @@ hr {
 }
 
 .btn-save {
-  margin-top: 4rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   background-color: #44bd32;
   color: white;
@@ -263,6 +265,35 @@ hr {
   color: #273c75;
 }
 
+.search-envelopes {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.search-envelopes input {
+  padding: 6px 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 2px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.search-envelopes input:focus {
+  outline: none;
+  border: none;
+}
+
+#search {
+  cursor: pointer;
+  height: 23px;
+  width: 23px;
+  padding: 7px;
+  background-color: wheat;
+}
 
 /* Responsive: stack on smaller screens */
 @media (max-width: 900px) {

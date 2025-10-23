@@ -79,17 +79,17 @@
             <form id="addEnvelopeForm" class="envelope-form">
                 <div class="form-group">
                     <label for="envelopeName">Envelope Name</label>
-                    <input type="text" id="envelopeName" name="name" placeholder="e.g. Groceries" required>
+                    <input type="text" id="envelopeName" name="name" placeholder="Groceries" required>
                 </div>
 
                 <div class="form-group">
                     <label for="envelopeBudget">Budget Amount</label>
-                    <input type="number" id="envelopeBudget" name="budget" placeholder="e.g. 5000" required>
+                    <input type="number" id="envelopeBudget" name="budget" placeholder="100" required>
                 </div>
 
                 <div class="form-group">
                     <label>Category</label>
-                    <input type="text" id="newCategoryName" placeholder="New category">
+                    <input type="text" id="newCategoryName" placeholder="Necessities">
                     <select id="existingCategorySelect">
                         <option value="">Select an existing category</option>
                     </select>
@@ -100,7 +100,8 @@
 
             <div class="envelope-list">
                 <div class="search-envelopes">
-
+                    <input type="text" name="searchbar" id="searchInput">
+                    <i data-lucide="search" id="search" onclick=""></i>
                 </div>
                 <h3>Your Envelopes</h3>
                 <div id="envelopeList">
