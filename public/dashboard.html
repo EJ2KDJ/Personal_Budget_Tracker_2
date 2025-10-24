@@ -22,6 +22,8 @@
         <a data-target="transfers" href="#">Transfers</a>
         <a data-target="transactions" href="#">Transactions</a>
     </div>
+
+    <!-- Profile -->
     <section id="profile" class="tab-section active">
         <h1>Profile</h1>
 
@@ -72,6 +74,8 @@
         <button id="deleteAccountBtn" class="btn-delete">Delete Account</button>
     </section>
 
+
+    <!-- Envelopes -->
     <section id="envelopes" class="tab-section">
         <h1>Envelopes</h1>
 
@@ -101,7 +105,16 @@
             <div class="envelope-list">
                 <div class="search-envelopes">
                     <input type="text" name="searchbar" id="searchInput">
-                    <i data-lucide="search" id="search" onclick=""></i>
+                    <button id="searchDropdownBtn">
+                        <i data-lucide="arrow-down-narrow-wide" id="search" onclick=""></i>
+                    </button>
+
+                    <div id="searchDropdown" class="dropdown hidden">
+                        <p data-field="name">Name</p>
+                        <p data-field="budget">Budget</p>
+                        <p data-field="category">Category</p>
+                        <p data-field="date">Date</p>
+                    </div>
                 </div>
                 <h3>Your Envelopes</h3>
                 <div id="envelopeList">
@@ -114,6 +127,6 @@
     <section id="transfers" class="tab-section"></section>
     <section id="transactions" class="tab-section"></section>
 </body>
-<script src="./js/dashboard.js"></script>
+<script src="./js/dashboard.js" defer></script>
 
 </html>
