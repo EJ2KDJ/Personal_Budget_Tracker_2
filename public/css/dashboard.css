@@ -265,6 +265,38 @@ hr {
   color: #273c75;
 }
 
+.envelope-item {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.envelope-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.envelope-item h4 {
+  margin: 0 0 0.5rem 0;
+  color: #273c75;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.envelope-item p {
+  margin: 0.25rem 0;
+  font-size: 14px;
+  color: #353b48;
+}
+
+.envelope-item p strong {
+  font-weight: 600;
+  color: #273c75;
+}
+
 .search-envelopes {
   display: flex;
   align-items: center;
