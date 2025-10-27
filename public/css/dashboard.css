@@ -279,6 +279,24 @@ hr {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+
+#envelopeList.scrollable {
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+#envelopeList.scrollable::-webkit-scrollbar {
+  width: 2px;
+}
+#envelopeList.scrollable::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+}
+#envelopeList.scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
 .envelope-item h4 {
   margin: 0 0 0.5rem 0;
   color: #273c75;
@@ -303,6 +321,8 @@ hr {
   margin-bottom: 1rem;
   width: 100%;
   border: 1px solid black;
+  position: relative;
+  overflow: visible;
 }
 
 .search-envelopes input {

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    lucide.createIcons();
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 

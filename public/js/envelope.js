@@ -6,6 +6,7 @@ export async function initEnvelopes() {
 }
 
 let allEnvelopes = []; // Store all envelopes for filtering
+let categoriesMap = {}; // Map of category Ids to names
 
 // Load existing categories from database
 async function loadCategories() {
@@ -39,6 +40,7 @@ async function loadCategories() {
       option.value = category.id;
       option.textContent = category.name;
       select.appendChild(option);
+      categoriesMap[category.id] = category.name;
     });
   } catch (err) {
     console.error("Error loading categories:", err);
@@ -66,7 +68,10 @@ async function loadEnvelopes() {
     }
 
     const data = await res.json();
-    allEnvelopes = data.envelopes || [];
+    allEnvelopes = (data.envelopes || []).map(env => ({
+      ...env,
+      category_name: categoriesMap[env.category_id] || "Uncategorized"
+    }));
     displayEnvelopes(allEnvelopes);
   } catch (err) {
     console.error("Error loading envelopes:", err);
@@ -89,10 +94,17 @@ function displayEnvelopes(envelopes) {
     <div class="envelope-item" data-id="${envelope.id}">
       <h4>${envelope.title}</h4>
       <p><strong>Budget:</strong> ₱${parseFloat(envelope.budget).toFixed(2)}</p>
-      <p><strong>Category ID:</strong> ${envelope.category_id || "N/A"}</p>
+      <p><strong>Category:</strong> ${envelope.category_name || "Uncategorized"}</p>
       <p><strong>Created:</strong> ${new Date(envelope.createdAt).toLocaleDateString()}</p>
     </div>
   `).join("");
+
+
+  if (envelopes.length > 5) {
+    listContainer.classList.add("scrollable");
+  } else {
+    listContainer.classList.remove("scrollable");
+  }
 }
 
 // Setup envelope form submission
@@ -216,7 +228,7 @@ function setupSearchDropdown() {
       const placeholders = {
         title: "Search by name...",
         budget: "Search by budget...",
-        category: "Search by category ID...",
+        category: "Search by category name...",
         date: "Search by date..."
       };
       searchInput.placeholder = placeholders[currentSearchField] || "Search...";
@@ -253,7 +265,7 @@ function performSearch(searchTerm, field) {
         return envelope.budget.toString().includes(searchTerm);
       
       case "category":
-        return envelope.category_id && envelope.category_id.toString().includes(searchTerm);
+        return envelope.category_name.toLowerCase().includes(searchLower);
       
       case "date":
         const dateStr = new Date(envelope.createdAt).toLocaleDateString();
