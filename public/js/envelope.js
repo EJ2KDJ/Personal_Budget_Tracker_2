@@ -114,6 +114,12 @@ function setupEnvelopeForm() {
       return;
     }
 
+    // Validate that user either selected a category or entered a new one
+    if (!newCategoryName && !existingCategoryId) {
+      alert("Please either select an existing category or create a new one");
+      return;
+    }
+
     let categoryId = existingCategoryId;
 
     // Create new category if user entered one
