@@ -1,4 +1,4 @@
-const {User, Categories} = require('../sequelize/models');
+const {User, Category} = require('../sequelize/models');
 
 const getCategoriesByUserId = async (req, res) => {
     try {
