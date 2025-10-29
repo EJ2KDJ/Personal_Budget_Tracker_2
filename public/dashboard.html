@@ -124,7 +124,41 @@
         </div>
     </section>
 
-    <section id="transfers" class="tab-section"></section>
+    <!-- Transfers -->
+    <section id="transfers" class="tab-section">
+    <div class="transferForm">
+        <h1>Transfer Funds Between Envelopes</h1>
+        <form id="transferForm">
+            <div class="form-group">
+                <label for="fromEnvelope">From Envelope</label>
+                <select id="fromEnvelope" name="fromEnvelope" required>
+                    <option value="">Select an envelope</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="toEnvelope">To Envelope</label>
+                <select id="toEnvelope" name="toEnvelope" required>
+                    <option value="">Select an envelope</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="transferAmount">Amount</label>
+                <input type="number" id="transferAmount" name="amount" placeholder="50" required>
+            </div>
+
+            <button type="submit" class="btn-save">Transfer Funds</button>
+        </form>
+
+        <div class="transfers-list">
+            <h2>Transfer History</h2>
+            <div id="transferHistory">
+                <p>Loading transfer history...</p>
+            </div>
+        </div>
+    </div>
+    </section>
     <section id="transactions" class="tab-section"></section>
 </body>
 <script src="./js/dashboard.js" defer></script>

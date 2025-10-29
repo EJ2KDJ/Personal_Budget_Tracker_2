@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const {Transfer, User, Envelope} = require('../sequelize/models');
 
 const createTransfer = async (req, res) => {
@@ -40,9 +41,9 @@ const createTransfer = async (req, res) => {
     }
 };
 
-const getAllTransfers = async (req, res) => {
+const getAllTransfersfromUser = async (req, res) => {
     try {
-        const transfers = await Transfer.findAll();
+        const transfers = await Transfer.findAll(where({user_id: req.user.id}));
         
         return res.status(201).json({transfers});
     } catch (err) {
@@ -52,5 +53,5 @@ const getAllTransfers = async (req, res) => {
 
 module.exports = {
     createTransfer,
-    getAllTransfers
+    getAllTransfersfromUser
 };
