@@ -54,6 +54,7 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         const user_id = req.user.id;
+        const user = await User.findByPk(user_id);
         if (parseInt(req.params.id) !== user_id) {
             return res.status(403).json({ error: 'Unauthorized' });
         }

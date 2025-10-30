@@ -8,13 +8,16 @@ const createTransfer = async (req, res) => {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { from_envelope, to_envelope, amount, date } = req.body;
-        if (!from_envelope || !to_envelope || amount === undefined || isNaN(Number(amount))) {
-            return res.status(400).json({ message: 'from_envelope, to_envelope and numeric amount are required' });
+        // Changed from_envelope/to_envelope to from_envelope_id/to_envelope_id
+        const { from_envelope_id, to_envelope_id, amount, date } = req.body;
+        
+        if (!from_envelope_id || !to_envelope_id || amount === undefined || isNaN(Number(amount))) {
+            return res.status(400).json({ message: 'from_envelope_id, to_envelope_id and numeric amount are required' });
         }
 
-        const fromEnv = await Envelope.findOne({ where: { id: from_envelope, user_id: userId } });
-        const toEnv = await Envelope.findOne({ where: { id: to_envelope, user_id: userId } });
+        // Changed variable names to match
+        const fromEnv = await Envelope.findOne({ where: { id: from_envelope_id, user_id: userId } });
+        const toEnv = await Envelope.findOne({ where: { id: to_envelope_id, user_id: userId } });
 
         if (!fromEnv || !toEnv) {
             return res.status(404).json({ message: 'One or both envelopes not found' });
@@ -30,10 +33,11 @@ const createTransfer = async (req, res) => {
         await fromEnv.save();
         await toEnv.save();
 
+        // Changed field names to match schema
         const newTransfer = await Transfer.create({
             user_id: userId,
-            from_envelope,
-            to_envelope,
+            from_envelope_id: from_envelope_id,
+            to_envelope_id: to_envelope_id,
             amount: amt,
             date: date || new Date()
         });

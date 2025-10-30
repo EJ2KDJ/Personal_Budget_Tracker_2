@@ -1,4 +1,4 @@
-const {Users, Transaction} = require('../sequelize/models');
+const {User, Transaction} = require('../sequelize/models');
 
 const getTransactionByUserId = async (req, res) => {
     try {
@@ -8,7 +8,7 @@ const getTransactionByUserId = async (req, res) => {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const user = await Users.findByPk(userId);
+        const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -32,7 +32,7 @@ const getAllTransactionsByUserId = async (req, res) => {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const user = await Users.findByPk(userId);
+        const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -55,7 +55,7 @@ const createTransaction = async (req, res) => {
         if (!userId) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
-        const user = await Users.findByPk(userId);
+        const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -87,7 +87,7 @@ const deleteTransaction = async (req, res) => {
             return res.status(401).json({ error: 'Unauthorized' });
         }
         
-        const user = Users.findByPk(userId);
+        const user = User.findByPk(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
