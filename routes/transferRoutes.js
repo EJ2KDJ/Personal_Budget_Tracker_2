@@ -6,6 +6,6 @@ const {authentication} = require('../middleware');
 router.use(authentication);
 
 router.post('/', transfersController.createTransfer);
-router.get('/', transfersController.getAllTransfersfromUser);
+router.get('/users/:id', transfersController.getAllTransfersfromUser);
 
 module.exports = router;

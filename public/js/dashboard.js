@@ -47,6 +47,9 @@ async function loadTabModule(tab) {
         } else if (tab === "envelopes") {
             const { initEnvelopes } = await import("./envelope.js");
             initEnvelopes();
+        } else if (tab === "transfers") {
+            const { initTransfers } = await import("./transfers.js");
+            initTransfers();
         }
 
     } catch (err) {
