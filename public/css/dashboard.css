@@ -201,7 +201,7 @@ hr {
 
 /* Envelopes Section ----------------------------------------*/
 
-.envelope-container {
+.tabContainers {
   display: grid;
   grid-template-columns: 600px 1fr;
   gap: 2rem;
@@ -289,9 +289,11 @@ hr {
 #envelopeList.scrollable::-webkit-scrollbar {
   width: 2px;
 }
+
 #envelopeList.scrollable::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.15);
 }
+
 #envelopeList.scrollable::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -423,86 +425,157 @@ hr {
 }
 
 
-/* Transactions Section ----------------------------------------*/
+/* Transfers Section ----------------------------------------*/
+
 .transfer-form-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-    max-width: 600px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  max-width: 600px;
 }
 
 .transfer-form-card .form-group {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .transfer-form-card label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 14px;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .transfer-form-card select,
 .transfer-form-card input[type="number"] {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    font-size: 14px;
-    background-color: white;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: white;
+  box-sizing: border-box;
 }
 
 .transfer-form-card select:focus,
 .transfer-form-card input:focus {
-    outline: none;
-    border-color: #273c75;
+  outline: none;
+  border-color: #273c75;
 }
 
 .envelope-balance {
-    font-size: 12px;
-    color: #666;
-    margin-top: 0.25rem;
+  font-size: 12px;
+  color: #666;
+  margin-top: 0.25rem;
 }
 
 .error-message {
-    color: #e74c3c;
-    font-size: 12px;
-    margin-top: 0.5rem;
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 0.5rem;
 }
 
 .transfers-list {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
 }
 
 .transfers-list h2 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    color: #273c75;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #273c75;
 }
 
 .transfer-item {
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    background-color: #f9f9f9;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
 }
 
 .transfer-item p {
-    margin: 0.25rem 0;
-    font-size: 14px;
+  margin: 0.25rem 0;
+  font-size: 14px;
 }
 
 .transfer-item strong {
-    font-weight: 600;
-    color: #273c75;
+  font-weight: 600;
+  color: #273c75;
+}
+/* Transaction Section ----------------------------------------*/
+
+.transaction-form-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.transaction-form-card .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.transaction-form-card label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.transaction-form-card select,
+.transaction-form-card input[type="number"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.transaction-form-card select:focus,
+.transaction-form-card input:focus {
+  outline: none;
+  border-color: #273c75;
+}
+
+.transactions-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
+}
+
+.transactions-list h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #273c75;
+}
+
+.transactions-list .transaction-item {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+}
+
+.transactions-list .transaction-item p {
+  margin: 0.25rem 0;
+  font-size: 14px;
+}
+
+.transactions-list .transaction-item strong {
+  font-weight: 600;
+  color: #273c75;
 }
 
 /* Responsive: stack on smaller screens */

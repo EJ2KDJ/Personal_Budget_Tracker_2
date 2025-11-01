@@ -28,8 +28,13 @@ const createTransfer = async (req, res) => {
             return res.status(400).json({ error: 'Insufficient balance' });
         }
 
-        fromEnv.budget -= amt;
-        toEnv.budget += amt;
+        const fromBudget = Number(fromEnv.budget);
+        const toBudget = Number(toEnv.budget);
+
+        // Proper addition and subtraction to envelopes
+        fromEnv.budget = fromBudget - amt;
+        toEnv.budget = toBudget + amt;
+
         await fromEnv.save();
         await toEnv.save();
 
