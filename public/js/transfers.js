@@ -1,55 +1,16 @@
 export async function initTransfers() {
+    await loadEnvelopes();
     await loadTransfers();
-    await setupTransferForm();
+    setupTransferForm();
 }
 
 let allTransfers = [];
 let envelopes = [];
 
-async function loadTransfers() {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-    try {
-        const res = await fetch(`/transfers/users/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-        });
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error("Failed to load transfers:", errorText);
-            return;
-        }
-
-        const data = await res.json();
-        allTransfers = data.transfers || [];
-
-    const transferList = document.getElementById("transferHistory");
-        transferList.innerHTML = "";
-        if (allTransfers.length === 0) {
-            transferList.innerHTML = "<p>No transfers found.</p>";
-            return;
-        }
-        allTransfers.forEach(transfer => {
-            const transferEl = document.createElement("div");
-            transferEl.classList.add("transfer-item");
-            transferEl.innerHTML = `
-                <p>From Envelope: ${transfer.from_envelope}</p>
-                <p>To Envelope: ${transfer.to_envelope}</p>
-                <p>Amount: $${transfer.amount.toFixed(2)}</p>
-                <p>Date: ${new Date(transfer.date).toLocaleDateString()}</p>
-            `;
-            transferList.appendChild(transferEl);
-        });
-    } catch (err) {
-        console.error("Error loading transfers:", err);
-    }
-}
-
 async function loadEnvelopes() {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
+
     try {
         const res = await fetch(`/envelopes/users/${userId}`, {
             headers: {
@@ -57,58 +18,188 @@ async function loadEnvelopes() {
                 'Content-Type': 'application/json'
             }
         });
+
         if (!res.ok) throw new Error("Failed to fetch envelopes");
+        
         const data = await res.json();
         envelopes = data.envelopes || [];
+
+        console.log('Loaded envelopes:', envelopes);
+        populateEnvelopeSelects();
     } catch (err) {
         console.error("Error loading envelopes:", err);
-        return [];
+        alert("Error loading envelopes. Please refresh the page.");
     }
 }
 
-function findEnvelopeIdByName(name) {
-    if (!name) return null;
-    const lower = String(name).toLowerCase();
-    const envelope = envelopes.find(env => {
-        const title = (env.title || env.name || '').toString().toLowerCase();
-        return title === lower;
+function populateEnvelopeSelects() {
+    const fromSelect = document.getElementById('fromEnvelope');
+    const toSelect = document.getElementById('toEnvelope');
+
+    if (!fromSelect || !toSelect) return;
+
+    fromSelect.innerHTML = '<option value="">Select envelope...</option>';
+    toSelect.innerHTML = '<option value="">Select envelope...</option>';
+
+    envelopes.forEach(env => {
+        const fromOption = document.createElement('option');
+        fromOption.value = env.id;
+        fromOption.textContent = `${env.title} (₱${parseFloat(env.budget).toFixed(2)})`;
+        fromSelect.appendChild(fromOption);
+
+        const toOption = document.createElement('option');
+        toOption.value = env.id;
+        toOption.textContent = `${env.title} (₱${parseFloat(env.budget).toFixed(2)})`;
+        toSelect.appendChild(toOption);
     });
-    return envelope ? envelope.id : null;
 }
 
-async function setupTransferForm() {
-    const form = document.getElementById("transferForm");
-    if (!form) return;
+async function loadTransfers() {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
     
-    // Load envelopes when setting up the form
-    await loadEnvelopes();
+    try {
+        const res = await fetch(`/transfers/users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        });
+        
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error("Failed to load transfers:", errorText);
+            document.getElementById("transferHistory").innerHTML = "<p>Error loading transfers</p>";
+            return;
+        }
 
-    form.addEventListener("submit", async (e) => {
+        const data = await res.json();
+        allTransfers = data.transfers || [];
+
+        const transferList = document.getElementById("transferHistory");
+        transferList.innerHTML = "";
+        
+        if (allTransfers.length === 0) {
+            transferList.innerHTML = "<p>No transfers found.</p>";
+            return;
+        }
+        
+        allTransfers.forEach(transfer => {
+            const fromEnv = envelopes.find(e => e.id === transfer.from_envelope_id);
+            const toEnv = envelopes.find(e => e.id === transfer.to_envelope_id);
+            
+            const transferEl = document.createElement("div");
+            transferEl.classList.add("transfer-item");
+            transferEl.innerHTML = `
+                <p><strong>From:</strong> ${fromEnv ? fromEnv.title : 'Unknown'}</p>
+                <p><strong>To:</strong> ${toEnv ? toEnv.title : 'Unknown'}</p>
+                <p><strong>Amount:</strong> ₱${parseFloat(transfer.amount).toFixed(2)}</p>
+                <p><strong>Date:</strong> ${new Date(transfer.date).toLocaleDateString()}</p>
+            `;
+            transferList.appendChild(transferEl);
+        });
+    } catch (err) {
+        console.error("Error loading transfers:", err);
+        document.getElementById("transferHistory").innerHTML = "<p>Error loading transfers</p>";
+    }
+}
+
+function setupTransferForm() {
+    const form = document.getElementById('transferForm');
+    const fromSelect = document.getElementById('fromEnvelope');
+    const toSelect = document.getElementById('toEnvelope');
+    const amountInput = document.getElementById('transferAmount');
+    const fromBalance = document.getElementById('fromBalance');
+    const toBalance = document.getElementById('toBalance');
+    const amountError = document.getElementById('amountError');
+
+    if (!form) return;
+
+    // Update balance display when envelope is selected
+    fromSelect.addEventListener('change', () => {
+        const envId = parseInt(fromSelect.value);
+        const env = envelopes.find(e => e.id === envId);
+        if (env) {
+            fromBalance.textContent = `Available: ₱${parseFloat(env.budget).toFixed(2)}`;
+        } else {
+            fromBalance.textContent = '';
+        }
+        validateAmount();
+    });
+
+    toSelect.addEventListener('change', () => {
+        const envId = parseInt(toSelect.value);
+        const env = envelopes.find(e => e.id === envId);
+        if (env) {
+            toBalance.textContent = `Current balance: ₱${parseFloat(env.budget).toFixed(2)}`;
+        } else {
+            toBalance.textContent = '';
+        }
+    });
+
+    amountInput.addEventListener('input', validateAmount);
+
+    function validateAmount() {
+        const fromEnvId = parseInt(fromSelect.value);
+        const amount = parseFloat(amountInput.value);
+        const fromEnv = envelopes.find(e => e.id === fromEnvId);
+
+        if (fromEnv && amount > 0) {
+            if (amount > parseFloat(fromEnv.budget)) {
+                amountError.textContent = `Amount exceeds available balance of ₱${parseFloat(fromEnv.budget).toFixed(2)}`;
+                return false;
+            } else {
+                amountError.textContent = '';
+                return true;
+            }
+        }
+        amountError.textContent = '';
+        return true;
+    }
+
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
         const token = localStorage.getItem("token");
+        const fromEnvId = parseInt(fromSelect.value);
+        const toEnvId = parseInt(toSelect.value);
+        const amount = parseFloat(amountInput.value);
 
-    const fromEnvelopeId = findEnvelopeIdByName(form.fromEnvelope.value);
-    const toEnvelopeId = findEnvelopeIdByName(form.toEnvelope.value);
+        // Validation
+        if (!fromEnvId || !toEnvId) {
+            alert("Please select both envelopes");
+            return;
+        }
 
-        if (!fromEnvelopeId || !toEnvelopeId) {
-            alert("One or both envelope names were not found. Please check the names and try again.");
+        if (fromEnvId === toEnvId) {
+            alert("Cannot transfer to the same envelope");
+            return;
+        }
+
+        if (!amount || amount <= 0) {
+            alert("Please enter a valid amount");
+            return;
+        }
+
+        if (!validateAmount()) {
+            alert("Amount exceeds available balance");
             return;
         }
 
         const transferData = {
-            from_envelope: fromEnvelopeId,
-            to_envelope: toEnvelopeId,
-            amount: parseFloat(form.amount.value),
+            from_envelope_id: fromEnvId,
+            to_envelope_id: toEnvId,
+            amount: amount,
             date: new Date().toISOString()
         };
 
-        if (!transferData.from_envelope || !transferData.to_envelope || isNaN(transferData.amount)) {
-            alert("Please fill out all fields correctly.");
-            return;
-        }
+        console.log('Sending transfer:', transferData);
 
         try {
-            // Create the transfer
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
             const res = await fetch(`/transfers`, {
                 method: "POST",
                 headers: {
@@ -118,16 +209,27 @@ async function setupTransferForm() {
                 body: JSON.stringify(transferData),
             });
 
+            const responseData = await res.json();
+            console.log('Transfer response:', responseData);
+
             if (res.ok) {
                 alert("Transfer created successfully!");
                 form.reset();
+                fromBalance.textContent = '';
+                toBalance.textContent = '';
+                amountError.textContent = '';
+                await loadEnvelopes(); // Reload to get updated balances
                 await loadTransfers();
             } else {
-                const errorText = await res.text();
-                alert(`Error: ${errorText || 'Failed to create transfer'}`);
+                alert(`Error: ${responseData.error || responseData.message || 'Failed to create transfer'}`);
             }
         } catch (err) {
             console.error("Error creating transfer:", err);
+            alert("Error creating transfer");
+        } finally {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Transfer Funds';
         }
     });
 }

@@ -423,6 +423,88 @@ hr {
 }
 
 
+/* Transactions Section ----------------------------------------*/
+.transfer-form-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    max-width: 600px;
+}
+
+.transfer-form-card .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.transfer-form-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.transfer-form-card select,
+.transfer-form-card input[type="number"] {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-size: 14px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.transfer-form-card select:focus,
+.transfer-form-card input:focus {
+    outline: none;
+    border-color: #273c75;
+}
+
+.envelope-balance {
+    font-size: 12px;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 0.5rem;
+}
+
+.transfers-list {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.transfers-list h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #273c75;
+}
+
+.transfer-item {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+}
+
+.transfer-item p {
+    margin: 0.25rem 0;
+    font-size: 14px;
+}
+
+.transfer-item strong {
+    font-weight: 600;
+    color: #273c75;
+}
+
 /* Responsive: stack on smaller screens */
 @media (max-width: 900px) {
   .envelope-container {
