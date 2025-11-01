@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (lastTabEl) switchTab(lastTabEl);
     else switchTab(document.querySelector('.sidebar a[data-target="profile"]'));
+
+    setupLogout();
 });
 
 const tabs = document.querySelectorAll('.sidebar a:not(.closebtn)');
@@ -37,8 +39,6 @@ tabs.forEach(tab => {
     });
 });
 
-
-
 async function loadTabModule(tab) {
     try {
         if (tab === "profile") {
@@ -50,11 +50,35 @@ async function loadTabModule(tab) {
         } else if (tab === "transfers") {
             const { initTransfers } = await import("./transfers.js");
             initTransfers();
+        } else if (tab === "transactions") {
+            const { initTransactions } = await import("./transaction.js");
+            initTransactions();
         }
-
     } catch (err) {
         console.error(`Failed to load module for tab "${tab}":`, err);
     }
+}
+
+function setupLogout() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (!logoutBtn) return;
+
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const confirmLogout = confirm('Are you sure you want to logout?');
+        
+        if (confirmLogout) {
+            // Clear all stored data
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('activeTab');
+            
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+    });
 }
 
 function toggleNav() {

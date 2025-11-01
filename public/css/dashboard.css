@@ -66,6 +66,42 @@ body {
   transition: 0.5s;
 }
 
+.sidebar .logout-btn {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 15px;
+  padding: 10px 15px;
+  color: white;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar .logout-btn:hover {
+  color: black;
+}
+
+.sidebar .logout-btn i {
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar .logout-btn span {
+  font-size: 16px;
+}
+
+.sidebar.closed .logout-btn span {
+  display: none;
+}
+
+.sidebar.closed .logout-btn {
+  margin: 0 10px;
+  justify-content: center;
+  padding: 10px;
+}
+
 .tab-section {
   display: none;
   padding: 2rem;

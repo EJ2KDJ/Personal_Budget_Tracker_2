@@ -1,4 +1,4 @@
-const {User, Transaction} = require('../sequelize/models');
+const {User, Transaction, Envelope} = require('../sequelize/models');
 
 const getTransactionByUserId = async (req, res) => {
     try {
@@ -55,6 +55,7 @@ const createTransaction = async (req, res) => {
         if (!userId) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
+        
         const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -65,14 +66,39 @@ const createTransaction = async (req, res) => {
             return res.status(400).json({ error: 'envelope_id, amount, type, and date are required' });
         }
 
+        // Find the envelope
+        const envelope = await Envelope.findOne({ where: { id: envelope_id, user_id: userId } });
+        if (!envelope) {
+            return res.status(404).json({ error: 'Envelope not found' });
+        }
+
+        const amt = Number(amount);
+        const currentBudget = Number(envelope.budget);
+
+        // Validate expense doesn't exceed budget
+        if (type === 'expense' && amt > currentBudget) {
+            return res.status(400).json({ error: 'Expense amount exceeds envelope budget' });
+        }
+
+        // Update envelope budget based on transaction type
+        if (type === 'expense') {
+            envelope.budget = currentBudget - amt;
+        } else if (type === 'income') {
+            envelope.budget = currentBudget + amt;
+        }
+
+        await envelope.save();
+
+        // Create the transaction record
         const newTransaction = await Transaction.create({
             user_id: userId,
             envelope_id,
-            amount,
+            amount: amt,
             type,
             date,
             description
         });
+
         return res.status(201).json({ transaction: newTransaction });
     } catch (err) {
         return res.status(500).json({ error: err.message});
@@ -87,10 +113,11 @@ const deleteTransaction = async (req, res) => {
             return res.status(401).json({ error: 'Unauthorized' });
         }
         
-        const user = User.findByPk(userId);
+        const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
+        
         const transaction_id = req.params.id;
 
         const transaction = await Transaction.findOne({ where: { id: transaction_id, user_id: userId } });
